@@ -1,32 +1,129 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+	int size =100;
+	int id[size];
+	string title[size];
+	string author[size];
+	bool status[size];
+	int element=0;
+	int choice =0;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+	do
+	{
+		cout << "\nLibrary Management System\n";
+        cout << "1. Add Book"<<endl;
+        cout << "2. View All Books"<<endl;
+        cout << "3. Search Book by ID"<<endl;
+        cout << "4. Issue Book"<<endl;
+        cout << "5. Return Book"<<endl;
+        cout << "6. Exit"<<endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-# Precompiled Headers
-*.gch
-*.pch
+        if(choice==1)
+        {
+        	if(element>=size){
+        		cout<<"no space to add"<<endl;
+        	    continue;
+			}
+			cout<<"enter tittle "<<endl;
+			cin>>title[element];
+			cout<<"enter author "<<endl;
+			cin>>author[element];
+			id[element]=element+1;
+			cout<<"id of book is "<<id[element]<<endl;
+			status[element] = false;
+			++element;
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
-# Fortran module files
-*.mod
-*.smod
+		}
+		else if(choice==2)
+		{
+			if(element==0){
+				cout<<"no book available"<<endl;
+				continue;
+			}
+			for(int i=0;i<element;i++){
+				cout<<"book author  "<<author[i]<<"book title  "<<title[i]<<" book id  "<<id[i]<<"  status   "<<(status[i] ? "issued ": "available")<<endl;
+			}
+		}
+		else if(choice==3)
+		{
+			int search;
+			cout<<"enter book id"<<endl;
+			cin>>search;
+			bool found = false;
+			for(int i=0;i<element;i++)
+			{
+				if(search==element){
+					cout<<"book available "<<endl<<"book id  "<<id[i]<<"book tittle   "<<title[i]<<"status  "<<(status[i] ? "issued ": "available")<<endl;
+					found = true;
+				    break;
+			    }
+			    if(!found)
+			    cout<<"book with id "<<search<<" book is not found"<<endl;
+			}
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+		}
+		else if(choice ==4)
+		{
+			int issue;
+			cout<<"enter id of the book to issue"<<endl;
+			cin>>issue;
+			bool found = false;
+			for(int i =0;i<element;i++)
+			{
+				if(issue==id[i])
+				{
+					found = true;
+                    if (status[i]==false) {
+                        status[i] = true;
+                        cout << "Book issued successfully." << endl;
+                    } else {
+                        cout << "Book is already issued." << endl;
+                    }
+                    break;
+				}
+				if (!found) {
+                cout << "Book with ID " << issue << " not found" << endl;
+                }
+			}
+	    }
+	    else if(choice==5)
+	    {
+	    	int retun;
+	    	cout<<"enter id to return"<<endl;
+	    	cin>>retun;
+	    	bool found = false;
+	    	for(int i=0;i<element;i++)
+	    	{
+	    		if(id[i] == retun)
+	    		{
+	    			found=true;
+	    			if (status[i]) {
+                        status[i] = false;
+                        cout << "Book returned successfully." << endl;
+                    }
+                    else
+					{
+                        cout << "Book was not issued." << endl;
+                        break;
+                    }
+				}
+			    if (!found) {
+                        cout << "Book with ID " << retun << " not found." << endl;
+                        }
+            }
+		}
+		else if (choice == 6) {
+            cout << "Exiting..." << endl;
 
-# Executables
-*.exe
-*.out
-*.app
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+
+	}while(choice!=6);
+}
